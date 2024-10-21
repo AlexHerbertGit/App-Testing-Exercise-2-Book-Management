@@ -61,5 +61,24 @@ function renderBooks(filter = 'all') {
     } else if (filter === 'unread') {
         filteredBooks = bookCollection.filter((book) => !book.read )
     }
+
+    //Render each book as list item
+    filteredBooks.forEach(book => {
+        const li = document.createElement('li')
+        li.className = 'book-item'
+        li.innerHTML = `<span class="${book.read ? 'read' : ''}" onclick="toggleBookStatus(${book.id})">${book.title} by ${book.author}</span>
+            <button onclick="deleteBook(${book.id})">Delete</button>`;
+        bookIsElement.appendChild(li);
+    })
 };
 
+//Export function for testing
+if(typeof module !== 'undefined') {
+    module.exports = {
+        addBook,
+        toggleBookStatus,
+        deleteBook,
+        filteredBooks,
+        bookCollection,
+    };
+}
