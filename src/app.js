@@ -23,3 +23,43 @@ function addBook() {
         authorInput.value = "";
     }
 }
+
+//Function to toggle the read status of a book
+function toggleBookStatus(id) {
+    const book = bookCollection.find(book => book.id === id)
+    if(book) {
+        book.read = !book.read //Toogle the read status
+        renderBooks(); //Render the updated list
+    }
+}
+
+//Function to delete a book from the bookCollection
+function deleteBook(id) {
+    const bookIndex = bookCollection.findIndex(book => book.id === id) 
+        if(bookindex > -1) {
+            bookCollection.splice(bookIndex, 1)
+            renderBooks() //Render the updated list
+        }
+    }
+
+//Function to filter books based on the status
+function filterBooks(status) {
+    renderBooks(status)
+}
+
+//Function to render books on the UI page
+function renderBooks(filter = 'all') {
+    const bookIsElement = document.getElementById('book-list')
+    bookIsElement.innerHTML = "" //Clear the exisiting list
+
+    //Filter books based on the selected filter
+    let filteredBooks = []
+    if(filter === 'all') {
+        filteredBooks = bookCollection;
+    } else if (filter === 'read') {
+        filteredBooks = bookCollection.filter((book) => book.read)
+    } else if (filter === 'unread') {
+        filteredBooks = bookCollection.filter((book) => !book.read )
+    }
+};
+
